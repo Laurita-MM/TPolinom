@@ -4,7 +4,7 @@
 
 using namespace std;
 
-TEST(TPolinomTest, can_create_monom)
+TEST(TPolinomTest, can_create_a_monom)
 {
 	int mas[1][2];
 	mas[0][0] = 3;
@@ -17,7 +17,19 @@ TEST(TPolinomTest, can_create_monom)
 	EXPECT_EQ(mon.pz, 3);
 }
 
-TEST(TPolinomTest, can_create_polinom)
+TEST(TPolinomTest, can_compare_the_monoms) {
+	int mas[1][2];
+	mas[0][0] = 3;
+	mas[0][1] = 123;
+	TMonom mon(mas);
+	int mas1[1][2];
+	mas[0][0] = 3;
+	mas[0][1] = 123;
+	TMonom mon1(mas1);
+	ASSERT_NO_THROW(mon==mon1);
+}
+
+TEST(TPolinomTest, can_create_a_polinom)
 {
 	int** mas;
 	mas = new int* [2];
@@ -168,4 +180,36 @@ TEST(TPolinomTest, can_multiply_polinom_by_a_constant) {
 	EXPECT_EQ(pol1.GetMonom().coeff, 6);
 	pol1.GoNext();
 	EXPECT_EQ(pol1.GetMonom().coeff, 3);
+}
+
+TEST(TPolinomTest, can_add_a_monom_to_a_polinom) {
+	int mas[1][2];
+	mas[0][0] = 2;
+	mas[0][1] = 245;
+	TMonom mon(mas);
+	int** mas2;
+	mas2 = new int* [2];
+	for (int i = 0; i < 2; i++)
+		mas2[i] = new int[2];
+	mas2[0][0] = 1;
+	mas2[0][1] = 123;
+	mas2[1][0] = 3;
+	mas2[1][1] = 321;
+	TPolinom pol2(mas2, 2);
+	pol2.InsMonom(mon);
+	pol2.Reset();
+	EXPECT_EQ(pol2.GetMonom().coeff, 3);
+	EXPECT_EQ(pol2.GetMonom().px, 3);
+	EXPECT_EQ(pol2.GetMonom().py, 2);
+	EXPECT_EQ(pol2.GetMonom().pz, 1);
+	pol2.GoNext();
+	EXPECT_EQ(pol2.GetMonom().coeff, 2);
+	EXPECT_EQ(pol2.GetMonom().px, 2);
+	EXPECT_EQ(pol2.GetMonom().py, 4);
+	EXPECT_EQ(pol2.GetMonom().pz, 5);
+	pol2.GoNext();
+	EXPECT_EQ(pol2.GetMonom().coeff, 1);
+	EXPECT_EQ(pol2.GetMonom().px, 1);
+	EXPECT_EQ(pol2.GetMonom().py, 2);
+	EXPECT_EQ(pol2.GetMonom().pz, 3);
 }

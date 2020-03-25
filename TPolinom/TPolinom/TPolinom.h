@@ -36,10 +36,10 @@ struct TMonom {
 		if (px > mon.px)
 			return true;
 		else
-			if (py > mon.py)
+			if (py > mon.py&& px == mon.px == py )
 				return true;
 			else
-				if (pz > mon.pz)
+				if (pz > mon.pz && px == mon.px && py == mon.py)
 					return true;
 				else
 					return false;
@@ -116,7 +116,7 @@ public:
 				InsCurr(mon);
 				return;
 			}
-			//InsLast(mon);
+			
 		}
 		InsLast(mon);
 	}
